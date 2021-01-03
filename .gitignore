@@ -2,3 +2,8 @@
 *.pyc
 *.egg-info
 PKG-INFO
+wgms3d/
+build/
+arpack-ng/
+superlu/
+

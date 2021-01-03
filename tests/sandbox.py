@@ -3,7 +3,6 @@ import pyMode as pm
 import numpy as np
 from scipy.interpolate import interp1d
 from matplotlib import pyplot as plt
-import pscan
 
 m = pm.PML(pm.Locations.N)
 e = pm.PML(pm.Locations.E)

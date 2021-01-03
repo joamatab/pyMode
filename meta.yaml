@@ -1,0 +1,39 @@
+# thanks to https://github.com/conda-forge/staged-recipes/pull/9863/files
+
+package:
+    name: pymode
+    version: "0.0.1"
+
+source:
+    path: .
+
+build:
+    number: 0
+    noarch: python
+    script: "python -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+    host:
+        - pip
+    build:
+        - python >=3.6
+        - arpack ==3.1.5
+        - suplerlu ==4.0.0
+
+    run:
+        - python >=3.6
+        - numpy ==1.19.0
+        - scipy ==1.5.3
+        - matplotlib ==3.3.2
+
+
+about:
+  home: https://github.com/smartalecH/pyMode
+  summary: Python wrapper for WGMS3D
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - joaquin
+
