@@ -1,8 +1,13 @@
+deps-petsc:
+	bash install_all.sh
 
-ubuntu:
-	sudo apt-get install libboost-all-dev
+deps-arpack:
+	bash install_all_with_arpack.sh
 
+conda:
+	conda build .
 
 install:
 	bash install.sh
 	pip install -e .
+
