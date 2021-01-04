@@ -4,9 +4,9 @@ import numpy as np
 from scipy.interpolate import interp1d
 from matplotlib import pyplot as plt
 
-m = pm.PML(pm.Locations.N)
-e = pm.PML(pm.Locations.E)
-s = pm.Magnetic(pm.Locations.S)
+m = pm.PML(pm.Location.N)
+e = pm.PML(pm.Location.E)
+s = pm.Magnetic(pm.Location.S)
 
 #makes grid that gives locations for grid for FDTD
 #takes in set locations, and densities at those locations
@@ -39,9 +39,9 @@ for k in range(len(dcore)):
     #make waveguide centered at (0,0)
     waveguide1 = pm.Trapezoid(
         center=pm.Vector3(0,0),
-        topFace = width,
+        top_face = width,
         thickness = thickness,
-        sidewallAngle = sidewallAngle_radians,
+        sidewall_angle = sidewallAngle_radians,
         core = Si,
         cladding=SiO2,
         rc = 0.0

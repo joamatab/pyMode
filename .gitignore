@@ -1,6 +1,8 @@
 # pip installation stuff
 *.pyc
 *.egg-info
+*.mgp
+*.txt
 PKG-INFO
 wgms3d/
 build/
