@@ -3,6 +3,7 @@
 *.egg-info
 *.mgp
 *.txt
+*.png
 PKG-INFO
 wgms3d/
 build/

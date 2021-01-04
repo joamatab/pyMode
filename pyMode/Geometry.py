@@ -16,8 +16,9 @@ import numpy as np
 # --------------------------------------------------------------------- #
 
 
-class Line():
+class Line:
     """A line defined in 2D space by start and end points."""
+
     def __init__(self, nLeft, nRight, X1, Y1, X2, Y2):
         """Initialize the line object.
 
@@ -43,12 +44,20 @@ class Line():
             (str): string representation of line object.
         """
         return "l ({:e},{:e}) ({:e},{:e}) {:e} {:e} {:e} {:e}\n".format(
-            self.nLeft.real, self.nLeft.imag, self.nRight.real, self.nRight.imag, self.X1, self.Y1, self.X2, self.Y2
+            self.nLeft.real,
+            self.nLeft.imag,
+            self.nRight.real,
+            self.nRight.imag,
+            self.X1,
+            self.Y1,
+            self.X2,
+            self.Y2,
         )
 
 
-class Bezier():
+class Bezier:
     """A Bezier curve (???) defined in 2D space by start and end points."""
+
     def __init__(self, nLeft, nRight, X1, Y1, X2, Y2):
         """Initialize the curve object.
 
@@ -74,11 +83,20 @@ class Bezier():
             (str): string representation of Bezier curve object.
         """
         return "l ({:e},{:e}) ({:e},{:e}) {:e} {:e} {:e} {:e}\n".format(
-            self.nLeft.real, self.nLeft.imag, self.nRight.real, self.nRight.imag, self.X1, self.Y1, self.X2, self.Y2
+            self.nLeft.real,
+            self.nLeft.imag,
+            self.nRight.real,
+            self.nRight.imag,
+            self.X1,
+            self.Y1,
+            self.X2,
+            self.Y2,
         )
 
-class Rectangle():
+
+class Rectangle:
     """Rectangle defined in 2D space, with the material of the core and cladding specified."""
+
     def __init__(self, center, size, core, cladding, rc=0):
         """Initialize the curve object.
 
@@ -114,33 +132,45 @@ class Rectangle():
         rc = self.rc
 
         lines = [  # top, bottom, left, right
-            [[centerX - width / 2 + rc, centerY + thickness / 2], [centerX + width / 2 - rc, centerY + thickness / 2]],
-            [[centerX - width / 2 + rc, centerY - thickness / 2], [centerX + width / 2 - rc, centerY - thickness / 2]],
-            [[centerX - width / 2, centerY - thickness / 2 + rc], [centerX - width / 2, centerY + thickness / 2 - rc]],
-            [[centerX + width / 2, centerY - thickness / 2 + rc], [centerX + width / 2, centerY + thickness / 2 - rc]]
+            [
+                [centerX - width / 2 + rc, centerY + thickness / 2],
+                [centerX + width / 2 - rc, centerY + thickness / 2],
+            ],
+            [
+                [centerX - width / 2 + rc, centerY - thickness / 2],
+                [centerX + width / 2 - rc, centerY - thickness / 2],
+            ],
+            [
+                [centerX - width / 2, centerY - thickness / 2 + rc],
+                [centerX - width / 2, centerY + thickness / 2 - rc],
+            ],
+            [
+                [centerX + width / 2, centerY - thickness / 2 + rc],
+                [centerX + width / 2, centerY + thickness / 2 - rc],
+            ],
         ]
 
         corners = [
-            [# top-left
+            [  # top-left
                 [centerX - width / 2, centerY + thickness / 2 - rc],
                 [centerX - width / 2, centerY + thickness / 2],
-                [centerX - width / 2 + rc, centerY + thickness / 2]
+                [centerX - width / 2 + rc, centerY + thickness / 2],
             ],
             [  # bottom-left
                 [centerX - width / 2, centerY - thickness / 2 + rc],
                 [centerX - width / 2, centerY - thickness / 2],
-                [centerX - width / 2 + rc, centerY - thickness / 2]
+                [centerX - width / 2 + rc, centerY - thickness / 2],
             ],
             [  # top-right
                 [centerX + width / 2 - rc, centerY + thickness / 2],
                 [centerX + width / 2, centerY + thickness / 2],
-                [centerX + width / 2, centerY + thickness / 2 - rc]
+                [centerX + width / 2, centerY + thickness / 2 - rc],
             ],
             [  # bottom-right
                 [centerX + width / 2 - rc, centerY - thickness / 2],
                 [centerX + width / 2, centerY - thickness / 2],
-                [centerX + width / 2, centerY - thickness / 2 + rc]
-            ]
+                [centerX + width / 2, centerY - thickness / 2 + rc],
+            ],
         ]
 
         cladding = cladding.get_n(1 / wavelength)
@@ -149,7 +179,7 @@ class Rectangle():
             [cladding, core],  # top line
             [core, cladding],  # bottom line
             [cladding, core],  # left line
-            [core, cladding]  # right line
+            [core, cladding],  # right line
         ]
 
         fileContents = ""
@@ -164,7 +194,7 @@ class Rectangle():
             currentLine = "l ({:e},{:e}) ({:e},{:e}) {:e} {:e} {:e} {:e}\n".format(
                 nLeft.real, nLeft.imag, nRight.real, nRight.imag, X1, Y1, X2, Y2
             )
-            fileContents += (currentLine)
+            fileContents += currentLine
 
         if rc > 0:
             for k in range(len(lines)):
@@ -176,14 +206,25 @@ class Rectangle():
                 Y3 = corners[k][2][1]
                 nLeft = indices[k][0]
                 nRight = indices[k][1]
-                currentLine = "b ({:e},{:e}) ({:e},{:e}) {:e} {:e} {:e} {:e} {:e} {:e}\n".format(
-                    nLeft.real, nLeft.imag, nRight.real, nRight.imag, X1, Y1, X2, Y2, X3, Y3
+                currentLine = (
+                    "b ({:e},{:e}) ({:e},{:e}) {:e} {:e} {:e} {:e} {:e} {:e}\n".format(
+                        nLeft.real,
+                        nLeft.imag,
+                        nRight.real,
+                        nRight.imag,
+                        X1,
+                        Y1,
+                        X2,
+                        Y2,
+                        X3,
+                        Y3,
+                    )
                 )
-                fileContents += (currentLine)
+                fileContents += currentLine
         return fileContents
 
 
-class Trapezoid():
+class Trapezoid:
     r"""Trapezoid defined in 2D space, with the material of the core and cladding specified.
 
                                       (x1,y1) ----------- (x2,y2)
@@ -192,7 +233,10 @@ class Trapezoid():
                                            /                \
                                  (x3,y3)  --------------------  (x4,y4)
     """
-    def __init__(self, center, top_face, thickness, sidewall_angle, core, cladding, rc=0):
+
+    def __init__(
+        self, center, top_face, thickness, sidewall_angle, core, cladding, rc=0
+    ):
         """Initialize the trapezoid object.
 
         Args:
@@ -216,10 +260,10 @@ class Trapezoid():
         # calculate length of bottom face based on the sidewall angle
         self.bottom_face = top_face + 2 * (thickness / np.tan(sidewall_angle))
 
-        self.X1 = self.centerX - self.top_face/2
-        self.X2 = self.centerX + self.top_face/2
-        self.X3 = self.centerX - self.bottom_face/2
-        self.X4 = self.centerX + self.bottom_face/2
+        self.X1 = self.centerX - self.top_face / 2
+        self.X2 = self.centerX + self.top_face / 2
+        self.X3 = self.centerX - self.bottom_face / 2
+        self.X4 = self.centerX + self.bottom_face / 2
         self.Y1 = self.centerY + self.thickness / 2
         self.Y2 = self.Y1
         self.Y3 = self.centerY - self.thickness / 2
@@ -235,11 +279,11 @@ class Trapezoid():
             [[self.X1 + self.rc, self.Y1], [self.X2 - self.rc, self.Y2]],  # top line
             [[self.X3 + self.rc, self.Y3], [self.X4 - self.rc, self.Y4]],  # bottom line
             [[self.X3, self.Y3 + self.rc], [self.X1, self.Y1 - self.rc]],  # left line
-            [[self.X4, self.Y4 + self.rc], [self.X2, self.Y2 - self.rc]]  # right line
+            [[self.X4, self.Y4 + self.rc], [self.X2, self.Y2 - self.rc]],  # right line
         ]
 
         if self.rc > 0:
-            raise ValueError('rounded corners not supported for trapezoids yet')
+            raise ValueError("rounded corners not supported for trapezoids yet")
 
         # corners = [
         #     [[], [], []],  # top left
@@ -254,7 +298,7 @@ class Trapezoid():
             [cladding, core],  # top line
             [core, cladding],  # bottom line
             [cladding, core],  # left line
-            [core, cladding]  # right line
+            [core, cladding],  # right line
         ]
 
         fileContents = ""
@@ -269,7 +313,7 @@ class Trapezoid():
             currentLine = "l ({:e},{:e}) ({:e},{:e}) {:e} {:e} {:e} {:e}\n".format(
                 nLeft.real, nLeft.imag, nRight.real, nRight.imag, X1, Y1, X2, Y2
             )
-            fileContents += (currentLine)
+            fileContents += currentLine
 
         # TODO: Enable rounded corners
 
@@ -299,6 +343,7 @@ def check_nonnegative(prop, val):
 
 class Vector3(object):
     """Vector in 3D space."""
+
     def __init__(self, x=0.0, y=0.0, z=0.0):
         """Initialize the vector with coordinate (x, y, z).
 
@@ -499,9 +544,11 @@ class Vector3(object):
 
     def close(self, other, tol=1.0e-7):
         """Determine whether two vectors are close to each other within a tolerance along all three dimensions."""
-        return (abs(self.x - other.x) <= tol and
-                abs(self.y - other.y) <= tol and
-                abs(self.z - other.z) <= tol)
+        return (
+            abs(self.x - other.x) <= tol
+            and abs(self.y - other.y) <= tol
+            and abs(self.z - other.z) <= tol
+        )
 
     def rotate(self, axis, theta):
         """Rotate the vector across an axis by angle theta.
@@ -533,31 +580,33 @@ class Vector3(object):
 
 
 class Medium(object):
-    def __init__(self,
-                 epsilon_diag=Vector3(1, 1, 1),
-                 epsilon_offdiag=Vector3(0j, 0j, 0j),
-                 mu_diag=Vector3(1, 1, 1),
-                 mu_offdiag=Vector3(0j, 0j, 0j),
-                 E_susceptibilities=[],
-                 H_susceptibilities=[],
-                 E_chi2_diag=Vector3(),
-                 E_chi3_diag=Vector3(),
-                 H_chi2_diag=Vector3(),
-                 H_chi3_diag=Vector3(),
-                 D_conductivity_diag=Vector3(),
-                 B_conductivity_diag=Vector3(),
-                 epsilon=None,
-                 index=None,
-                 mu=None,
-                 chi2=None,
-                 chi3=None,
-                 D_conductivity=None,
-                 B_conductivity=None,
-                 E_chi2=None,
-                 E_chi3=None,
-                 H_chi2=None,
-                 H_chi3=None,
-                 valid_freq_range=None):
+    def __init__(
+        self,
+        epsilon_diag=Vector3(1, 1, 1),
+        epsilon_offdiag=Vector3(0j, 0j, 0j),
+        mu_diag=Vector3(1, 1, 1),
+        mu_offdiag=Vector3(0j, 0j, 0j),
+        E_susceptibilities=[],
+        H_susceptibilities=[],
+        E_chi2_diag=Vector3(),
+        E_chi3_diag=Vector3(),
+        H_chi2_diag=Vector3(),
+        H_chi3_diag=Vector3(),
+        D_conductivity_diag=Vector3(),
+        B_conductivity_diag=Vector3(),
+        epsilon=None,
+        index=None,
+        mu=None,
+        chi2=None,
+        chi3=None,
+        D_conductivity=None,
+        B_conductivity=None,
+        E_chi2=None,
+        E_chi3=None,
+        H_chi2=None,
+        H_chi3=None,
+        valid_freq_range=None,
+    ):
 
         if epsilon:
             epsilon_diag = Vector3(epsilon, epsilon, epsilon)
@@ -569,9 +618,13 @@ class Medium(object):
             mu_diag = Vector3(mu, mu, mu)
 
         if D_conductivity:
-            D_conductivity_diag = Vector3(D_conductivity, D_conductivity, D_conductivity)
+            D_conductivity_diag = Vector3(
+                D_conductivity, D_conductivity, D_conductivity
+            )
         if B_conductivity:
-            B_conductivity_diag = Vector3(B_conductivity, B_conductivity, B_conductivity)
+            B_conductivity_diag = Vector3(
+                B_conductivity, B_conductivity, B_conductivity
+            )
 
         if E_chi2:
             E_chi2_diag = Vector3(E_chi2, E_chi2, E_chi2)
@@ -606,17 +659,32 @@ class Medium(object):
             freq = np.array([freq])
 
         # Initialize with instantaneous dielectric tensor, use numpy arrays for convenience and speed
-        eps = np.array([self.epsilon_diag.x, self.epsilon_diag.y, self.epsilon_diag.z], dtype='complex128')
+        eps = np.array(
+            [self.epsilon_diag.x, self.epsilon_diag.y, self.epsilon_diag.z],
+            dtype="complex128",
+        )
 
         # Iterate through and sum up susceptibilities
         for k in range(len(self.E_susceptibilities)):
             eps = eps + self.E_susceptibilities[k].eval_susceptibility(freq)
 
         # Account for conductivity term
-        eps = (1 + 1j * np.array(
-            [self.D_conductivity_diag.x, self.D_conductivity_diag.y, self.D_conductivity_diag.z]
-        ) / freq.reshape(-1, 1)) * eps
-        eps = [Vector3(eps[row, 0], eps[row, 1], eps[row, 2]) for row in range(freq.shape[0])]
+        eps = (
+            1
+            + 1j
+            * np.array(
+                [
+                    self.D_conductivity_diag.x,
+                    self.D_conductivity_diag.y,
+                    self.D_conductivity_diag.z,
+                ]
+            )
+            / freq.reshape(-1, 1)
+        ) * eps
+        eps = [
+            Vector3(eps[row, 0], eps[row, 1], eps[row, 2])
+            for row in range(freq.shape[0])
+        ]
 
         # Only return x-component for now
         return np.squeeze(np.array([o.x for o in eps]))
@@ -626,7 +694,6 @@ class Medium(object):
 
 
 class Susceptibility(object):
-
     def __init__(self, sigma_diag=Vector3(), sigma_offdiag=Vector3(), sigma=None):
         self.sigma_diag = Vector3(sigma, sigma, sigma) if sigma else sigma_diag
         self.sigma_offdiag = sigma_offdiag
@@ -635,15 +702,14 @@ class Susceptibility(object):
         sigma = Matrix(
             Vector3(self.sigma_diag.x, self.sigma_offdiag.x, self.sigma_offdiag.y),
             Vector3(self.sigma_offdiag.x, self.sigma_diag.y, self.sigma_offdiag.z),
-            Vector3(self.sigma_offdiag.y, self.sigma_offdiag.z, self.sigma_diag.z)
-                      )
+            Vector3(self.sigma_offdiag.y, self.sigma_offdiag.z, self.sigma_diag.z),
+        )
         new_sigma = (m * sigma * m.transpose()) / abs(m.determinant())
         self.sigma_diag = Vector3(new_sigma.c1.x, new_sigma.c2.y, new_sigma.c3.z)
         self.sigma_offdiag = Vector3(new_sigma.c2.x, new_sigma.c3.x, new_sigma.c3.y)
 
 
 class LorentzianSusceptibility(Susceptibility):
-
     def __init__(self, frequency=0.0, gamma=0.0, **kwargs):
         super(LorentzianSusceptibility, self).__init__(**kwargs)
         self.frequency = frequency
@@ -653,18 +719,19 @@ class LorentzianSusceptibility(Susceptibility):
 
         # Use numpy arrays for element-wise multiplication later
         sigma = np.array([self.sigma_diag.x, self.sigma_diag.y, self.sigma_diag.z])
-        eps = np.zeros((freq.shape[0], 3), dtype='complex128')
+        eps = np.zeros((freq.shape[0], 3), dtype="complex128")
 
         # Iterate through dimensions
         for k in range(3):
             num = sigma[k] * self.frequency * self.frequency
-            denom = self.frequency * self.frequency - freq * freq - 1j * self.gamma * freq
+            denom = (
+                self.frequency * self.frequency - freq * freq - 1j * self.gamma * freq
+            )
             eps[:, k] = num / denom
         return eps
 
 
 class DrudeSusceptibility(Susceptibility):
-
     def __init__(self, frequency=0.0, gamma=0.0, **kwargs):
         super(DrudeSusceptibility, self).__init__(**kwargs)
         self.frequency = frequency
@@ -673,9 +740,11 @@ class DrudeSusceptibility(Susceptibility):
     def eval_susceptibility(self, freq):
         # Use numpy arrays for element-wise multiplication later
         sigma = np.array([self.sigma_diag.x, self.sigma_diag.y, self.sigma_diag.z])
-        eps = np.zeros((freq.shape[0], 3), dtype='complex128')
+        eps = np.zeros((freq.shape[0], 3), dtype="complex128")
 
         # Iterate through dimensions
         for k in range(3):
-            eps[:, k] = (-sigma[k] * self.frequency * self.frequency) / (freq * (freq + 1j * self.gamma))
+            eps[:, k] = (-sigma[k] * self.frequency * self.frequency) / (
+                freq * (freq + 1j * self.gamma)
+            )
         return eps

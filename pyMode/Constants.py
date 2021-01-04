@@ -7,6 +7,6 @@ from collections import namedtuple
 import pyMode as pm
 
 
-FreqRange = namedtuple('FreqRange', ['min', 'max'])
+FreqRange = namedtuple("FreqRange", ["min", "max"])
 
 AIR = pm.Medium(index=1)
